@@ -1,0 +1,39 @@
+﻿@model MVC_Entity.Models.Staff_Details
+
+@{
+    ViewBag.Title = "Staff Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Staff_Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.staff_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.staff_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.course_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.course_name)
+        </dd>
+
+        
+
+        
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.staff_Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Entity_Asg_1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="courses">
+    <Key>
+      <PropertyRef Name="course_Id" />
+    </Key>
+    <Property Name="course_Id" Type="int" Nullable="false" />
+    <Property Name="course_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Staff_Details">
+    <Key>
+      <PropertyRef Name="staff_Id" />
+    </Key>
+    <Property Name="staff_Id" Type="int" Nullable="false" />
+    <Property Name="course_Id" Type="int" Nullable="false" />
+    <Property Name="staff_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="course_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="student_Id" />
+    </Key>
+    <Property Name="student_Id" Type="int" Nullable="false" />
+    <Property Name="student_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="course_Id" Type="int" Nullable="false" />
+    <Property Name="course_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Staff_Details_courses">
+    <End Role="courses" Type="Self.courses" Multiplicity="1" />
+    <End Role="Staff_Details" Type="Self.Staff_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="courses">
+        <PropertyRef Name="course_Id" />
+      </Principal>
+      <Dependent Role="Staff_Details">
+        <PropertyRef Name="course_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Student_courses">
+    <End Role="courses" Type="Self.courses" Multiplicity="1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="courses">
+        <PropertyRef Name="course_Id" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="course_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Entity_Asg_1ModelStoreContainer">
+    <EntitySet Name="courses" EntityType="Self.courses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Staff_Details" EntityType="Self.Staff_Details" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Staff_Details_courses" Association="Self.FK_Staff_Details_courses">
+      <End Role="courses" EntitySet="courses" />
+      <End Role="Staff_Details" EntitySet="Staff_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_courses" Association="Self.FK_Student_courses">
+      <End Role="courses" EntitySet="courses" />
+      <End Role="Student" EntitySet="Student" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

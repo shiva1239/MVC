@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Entity_Asg_1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="cours">
+    <Key>
+      <PropertyRef Name="course_Id" />
+    </Key>
+    <Property Name="course_Id" Type="Int32" Nullable="false" />
+    <Property Name="course_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Staff_Details" Relationship="Self.FK_Staff_Details_courses" FromRole="courses" ToRole="Staff_Details" />
+    <NavigationProperty Name="Students" Relationship="Self.FK_Student_courses" FromRole="courses" ToRole="Student" />
+  </EntityType>
+  <EntityType Name="Staff_Details">
+    <Key>
+      <PropertyRef Name="staff_Id" />
+    </Key>
+    <Property Name="staff_Id" Type="Int32" Nullable="false" />
+    <Property Name="course_Id" Type="Int32" Nullable="false" />
+    <Property Name="staff_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="course_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="cours" Relationship="Self.FK_Staff_Details_courses" FromRole="Staff_Details" ToRole="courses" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="student_Id" />
+    </Key>
+    <Property Name="student_Id" Type="Int32" Nullable="false" />
+    <Property Name="student_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="course_Id" Type="Int32" Nullable="false" />
+    <Property Name="course_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="cours" Relationship="Self.FK_Student_courses" FromRole="Student" ToRole="courses" />
+  </EntityType>
+  <Association Name="FK_Staff_Details_courses">
+    <End Role="courses" Type="Self.cours" Multiplicity="1" />
+    <End Role="Staff_Details" Type="Self.Staff_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="courses">
+        <PropertyRef Name="course_Id" />
+      </Principal>
+      <Dependent Role="Staff_Details">
+        <PropertyRef Name="course_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Student_courses">
+    <End Role="courses" Type="Self.cours" Multiplicity="1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="courses">
+        <PropertyRef Name="course_Id" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="course_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Entity_Asg_1Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="courses" EntityType="Self.cours" />
+    <EntitySet Name="Staff_Details" EntityType="Self.Staff_Details" />
+    <EntitySet Name="Students" EntityType="Self.Student" />
+    <AssociationSet Name="FK_Staff_Details_courses" Association="Self.FK_Staff_Details_courses">
+      <End Role="courses" EntitySet="courses" />
+      <End Role="Staff_Details" EntitySet="Staff_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_courses" Association="Self.FK_Student_courses">
+      <End Role="courses" EntitySet="courses" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
